@@ -94,7 +94,7 @@ function alertprice(){
     while(1){
 
         function judge(a){
-            return a.price < balance;
+            return a.price <= balance;
         }
 
         let newmenu = menu.filter(judge);
