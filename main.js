@@ -1,6 +1,7 @@
 const price = document.getElementById("price");
 const doButton = document.getElementById("doButton");
 const result = document.getElementById("result");
+const dotweet = document.getElementById("tweet");
 
 let menu = [
     {name:"おろしハンバーグ",price:264},
@@ -85,8 +86,9 @@ function compare(a,b){
 
 menu.sort(compare);
 
+let setmenu = [];
 
-function alertprice(){
+function selectmenu(){
 
     let balance = price.value
     let i;
@@ -102,11 +104,40 @@ function alertprice(){
 
         i = Math.floor(Math.random()*newmenu.length);
 
-        result.innerHTML += `<tr><td>${newmenu[i].name}</td> <td>${newmenu[i].price}円</td></tr>`;
+        setmenu.push(newmenu[i]);
         balance -= newmenu[i].price;
+    }
+    return balance;
+}
+
+function alertprice(){
+    setmenu = [];
+
+    let balance = selectmenu();
+
+    setmenu.sort(function(a,b){
+        return a.name.localeCompare(b.name, 'ja');
+    })
+    setmenu.sort(compare);
+
+    let i = 0;
+    while(i < setmenu.length) {
+        result.innerHTML += `<tr><td>${setmenu[i].name}</td> <td>${setmenu[i].price}円</td></tr>`;
+        i++;
     }
     result.innerHTML += `残金 ${balance}円`;
 }
 
-doButton.onclick = alertprice;
+function tweet(){
+    let text = "";
+    let i = 0;
+    while(i < setmenu.length) {
+        text += setmenu[i].name + " " + setmenu[i].price + "円%0D%0A";
+        i++;
+    }
+    text += "https://kyu099.github.io/coopgacha/"
+    window.open(`https://twitter.com/intent/tweet?text=${text}`,)
+}
 
+doButton.onclick = alertprice;
+dotweet.onclick = tweet;
