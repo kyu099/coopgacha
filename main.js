@@ -91,10 +91,10 @@ let money = [];
 
 function selectmenu(){
 
-    let balance = price.value
+    let balance = price.value;
     money[0] = balance;
     let i;
-    result.innerHTML = '';
+    result.innerHTML = "";
     while(1){
 
         function judge(a){
@@ -114,6 +114,19 @@ function selectmenu(){
 }
 
 function alertprice(){
+    let a = +price.value
+
+    if(Number.isInteger(a) === false){
+        alert('整数を入力してください');
+        return;
+    }
+
+    if(a < 0){
+        alert("正の数を入力してください");
+        return;
+    }
+
+
     setmenu = [];
 
     let balance = selectmenu();
@@ -146,3 +159,4 @@ function tweet(){
 
 doButton.onclick = alertprice;
 dotweet.onclick = tweet;
+
