@@ -68,7 +68,7 @@ let menu = [
     {name:"かき揚そば大",price:404},
     {name:"釜玉うどん中",price:319},
     {name:"釜玉そば中",price:319},
-    {name:"釜玉うどん台",price:404},
+    {name:"釜玉うどん大",price:404},
     {name:"釜玉そば大",price:404},
     {name:"きつねうどん中",price:319},
     {name:"きつねそば中",price:319},
