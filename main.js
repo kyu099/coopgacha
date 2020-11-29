@@ -116,7 +116,7 @@ function selectmenu(){
 function alertprice(){
     let a = +price.value
 
-    if(Number.isInteger(a) === false){
+    if(price.value.includes(".")){
         alert('整数を入力してください');
         return;
     }
