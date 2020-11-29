@@ -183,17 +183,15 @@ function tweet(){
             text += menu[i].name + " " + menu[i].price + " %C3%97" + setmenu[i] + "%E5%86%86%0D%0A";
             i++;
         }
-        text += `%0D%0A%E6%AE%8B%E9%87%91 ${money[1]}%E5%86%86%0D%0A`;
-        text += "%0D%0A%23%E7%94%9F%E5%8D%94%E9%A3%9F%E5%A0%82%E3%82%AC%E3%83%81%E3%83%A3%0D%0Ahttps://kyu099.github.io/coopgacha/"
     } else if (checked[1] === true){
         while(i < setmenu.length) {
             text += setmenu[i].name + " " + setmenu[i].price + "%E5%86%86%0D%0A";
             i++;
         }
-        text += `%0D%0A%E6%AE%8B%E9%87%91 ${money[1]}%E5%86%86%0D%0A`;
-        text += "%0D%0A%23%E7%94%9F%E5%8D%94%E9%A3%9F%E5%A0%82%E3%82%AC%E3%83%81%E3%83%A3%0D%0Ahttps://kyu099.github.io/coopgacha/"
     }
 
+    text += `%0D%0A%E6%AE%8B%E9%87%91 ${money[1]}%E5%86%86%0D%0A`;
+    text += "%0D%0A%23%E7%94%9F%E5%8D%94%E9%A3%9F%E5%A0%82%E3%82%AC%E3%83%81%E3%83%A3%0D%0Ahttps://kyu099.github.io/coopgacha/"
     window.open(`https://twitter.com/intent/tweet?text=${text}`,)
 }
 
