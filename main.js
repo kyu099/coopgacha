@@ -101,7 +101,6 @@ function selectmenu(){
     money[0] = balance;
     let len = menu.length;
     let i;
-    result.innerHTML = "";
 
     while(balance >= menu[0].price){
 
@@ -122,6 +121,8 @@ function selectmenu(){
 }
 
 function alertprice(){
+    result.innerHTML = "処理中";
+
     let a = +price.value
 
     if(price.value.includes(".")){
@@ -180,7 +181,7 @@ function tweet(){
     if(checked[0] === true) {
         while(i < menu.length) {
             if(setmenu[i] > 0)
-            text += menu[i].name + " " + menu[i].price + " %C3%97" + setmenu[i] + "%E5%86%86%0D%0A";
+            text += menu[i].name + " " + menu[i].price + "%E5%86%86" + " %C3%97" + setmenu[i] + "%0D%0A";
             i++;
         }
     } else if (checked[1] === true){
