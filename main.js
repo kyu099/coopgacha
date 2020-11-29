@@ -2,6 +2,8 @@ const price = document.getElementById("price");
 const doButton = document.getElementById("doButton");
 const result = document.getElementById("result");
 const dotweet = document.getElementById("tweet");
+const low = document.getElementById("low");
+const high = document.getElementById("high");
 
 let menu = [
     {name:"おろしハンバーグ",price:264},
@@ -84,10 +86,14 @@ function compare(a,b){
     return a.price - b.price;
 }
 
+menu.sort(function(a,b){
+    return a.name.localeCompare(b.name, 'ja');
+})
 menu.sort(compare);
 
 let setmenu = [];
 let money = [];
+let checked = [];
 
 function selectmenu(){
 
@@ -105,7 +111,11 @@ function selectmenu(){
 
         i = Math.floor(Math.random()*len);
 
-        setmenu.push(menu[i]);
+        if(high.checked){
+            setmenu[i]++;
+        } else if(low.checked){
+            setmenu.push(menu[i]);
+        }
         balance -= menu[i].price;
     }
     money[1] = balance;
@@ -124,36 +134,66 @@ function alertprice(){
         return;
     }
 
+    let result_menu;
+    checked = [high.checked, low.checked];
 
-    setmenu = [];
+    if(checked[0] === true){
+        setmenu = (new Array(menu.length).fill(0));
 
-    selectmenu();
+        selectmenu();
 
-    setmenu.sort(function(a,b){
-        return a.name.localeCompare(b.name, 'ja');
-    })
-    setmenu.sort(compare);
+        let i = 0;
+        result_menu = "";
+        while(i < menu.length) {
+            if(setmenu[i] > 0)
+            result_menu += `<tr><td>${menu[i].name}</td> <td>${menu[i].price}円</td> <td>×${setmenu[i]}<td></tr>`;
+            i++;
+        }
+    } else if(checked[1] === true){
+        setmenu = [];
 
-    let i = 0;
-    let result_menu = "";
-    while(i < setmenu.length) {
-        result_menu += `<tr><td>${setmenu[i].name}</td> <td>${setmenu[i].price}円</td></tr>`;
-        i++;
+        selectmenu();
+
+        setmenu.sort(function(a,b){
+            return a.name.localeCompare(b.name, 'ja');
+        })
+        setmenu.sort(compare);
+
+        let i = 0;
+        result_menu = "";
+        while(i < setmenu.length) {
+            result_menu += `<tr><td>${setmenu[i].name}</td> <td>${setmenu[i].price}円</td></tr>`;
+            i++;
+        }
     }
+
     result_menu += `残金 ${money[1]}円`;
     result.innerHTML = result_menu;
+
 }
 
 function tweet(){
     let text = "";
     text += money[0] + "%E5%86%86%E3%81%A7%E3%82%AC%E3%83%81%E3%83%A3%E3%82%92%E5%9B%9E%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F%0D%0A%0D%0A";
     let i = 0;
-    while(i < setmenu.length) {
-        text += setmenu[i].name + " " + setmenu[i].price + "%E5%86%86%0D%0A";
-        i++;
+
+    if(checked[0] === true) {
+        while(i < menu.length) {
+            if(setmenu[i] > 0)
+            text += menu[i].name + " " + menu[i].price + " %C3%97" + setmenu[i] + "%E5%86%86%0D%0A";
+            i++;
+        }
+        text += `%0D%0A%E6%AE%8B%E9%87%91 ${money[1]}%E5%86%86%0D%0A`;
+        text += "%0D%0A%23%E7%94%9F%E5%8D%94%E9%A3%9F%E5%A0%82%E3%82%AC%E3%83%81%E3%83%A3%0D%0Ahttps://kyu099.github.io/coopgacha/"
+    } else if (checked[1] === true){
+        while(i < setmenu.length) {
+            text += setmenu[i].name + " " + setmenu[i].price + "%E5%86%86%0D%0A";
+            i++;
+        }
+        text += `%0D%0A%E6%AE%8B%E9%87%91 ${money[1]}%E5%86%86%0D%0A`;
+        text += "%0D%0A%23%E7%94%9F%E5%8D%94%E9%A3%9F%E5%A0%82%E3%82%AC%E3%83%81%E3%83%A3%0D%0Ahttps://kyu099.github.io/coopgacha/"
     }
-    text += `%0D%0A%E6%AE%8B%E9%87%91 ${money[1]}%E5%86%86%0D%0A`;
-    text += "%0D%0A%23%E7%94%9F%E5%8D%94%E9%A3%9F%E5%A0%82%E3%82%AC%E3%83%81%E3%83%A3%0D%0Ahttps://kyu099.github.io/coopgacha/"
+
     window.open(`https://twitter.com/intent/tweet?text=${text}`,)
 }
 
