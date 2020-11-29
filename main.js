@@ -93,24 +93,22 @@ function selectmenu(){
 
     let balance = price.value;
     money[0] = balance;
+    let len = menu.length;
     let i;
     result.innerHTML = "";
-    while(1){
 
-        function judge(a){
-            return a.price <= balance;
+    while(balance >= menu[0].price){
+
+        while(menu[len - 1].price > balance){
+            len--;
         }
 
-        let newmenu = menu.filter(judge);
-        if(newmenu.length === 0){break;}
+        i = Math.floor(Math.random()*len);
 
-        i = Math.floor(Math.random()*newmenu.length);
-
-        setmenu.push(newmenu[i]);
-        balance -= newmenu[i].price;
+        setmenu.push(menu[i]);
+        balance -= menu[i].price;
     }
     money[1] = balance;
-    return balance;
 }
 
 function alertprice(){
@@ -129,7 +127,7 @@ function alertprice(){
 
     setmenu = [];
 
-    let balance = selectmenu();
+    selectmenu();
 
     setmenu.sort(function(a,b){
         return a.name.localeCompare(b.name, 'ja');
@@ -141,7 +139,7 @@ function alertprice(){
         result.innerHTML += `<tr><td>${setmenu[i].name}</td> <td>${setmenu[i].price}円</td></tr>`;
         i++;
     }
-    result.innerHTML += `残金 ${balance}円`;
+    result.innerHTML += `残金 ${money[1]}円`;
 }
 
 function tweet(){
