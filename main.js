@@ -135,11 +135,13 @@ function alertprice(){
     setmenu.sort(compare);
 
     let i = 0;
+    let result_menu = "";
     while(i < setmenu.length) {
-        result.innerHTML += `<tr><td>${setmenu[i].name}</td> <td>${setmenu[i].price}円</td></tr>`;
+        result_menu += `<tr><td>${setmenu[i].name}</td> <td>${setmenu[i].price}円</td></tr>`;
         i++;
     }
-    result.innerHTML += `残金 ${money[1]}円`;
+    result_menu += `残金 ${money[1]}円`;
+    result.innerHTML = result_menu;
 }
 
 function tweet(){
