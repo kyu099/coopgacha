@@ -117,7 +117,7 @@ function alertprice(){
     let a = +price.value
 
     if(price.value.includes(".")){
-        alert('整数を入力してください');
+        alert("数字以外の記号を入力しないでください");
         return;
     }
 
