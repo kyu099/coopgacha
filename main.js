@@ -118,6 +118,30 @@ function selectmenu(balance){
     money[1] = balance;
 }
 
+function rnorm(){
+    return Math.sqrt(-2 * Math.log(1 - Math.random())) * Math.cos(2 * Math.PI * Math.random());
+} // 標準正規分布に基づいた乱数
+
+function selectdistribution(balance){
+    let total = 0;
+    let j = 0;
+    while(j < menu.length){
+        total += menu[j].price;
+        j++;
+    }
+
+    average = Math.floor((balance - 10000000000) / total);
+
+    j = 0;
+    while(j < menu.length && balance > 10000000000){
+        let quantity = Math.floor(average + Math.sqrt(average) * rnorm());
+        setmenu[j] = quantity;
+        balance -= menu[j].price * quantity;
+        j++;
+    }
+    return balance;
+}
+
 function alertprice(){
     result.innerHTML = "";
 
@@ -134,14 +158,43 @@ function alertprice(){
         return;
     }
 
+    if(balance > Number.MAX_SAFE_INTEGER){
+        alert("数字が大きすぎます");
+        return;
+    }
+
     let result_menu;
     checked = [high.checked, low.checked];
 
     if(checked[0] === true){
         setmenu = (new Array(menu.length).fill(0));
+        let f = balance;
+
+        if(balance > 10000000000){
+            balance = selectdistribution(balance);
+        }
 
         selectmenu(balance);
 
+        // 分散を求める。
+        /*
+        let total = 0;
+        let j = 0;
+        while(j < menu.length){
+            total += menu[j].price;
+            j++;
+        }
+
+        let average = Math.floor(f/total);
+        let dist = 0;
+        j = 0;
+        while(j < setmenu.length){
+            dist += (average - setmenu[j]) * (average - setmenu[j])/setmenu.length;
+            j++;
+        }
+        alert(`平均は${average}\n分散は${dist}`);
+        */
+        
         let i = 0;
         result_menu = "";
         while(i < menu.length) {
