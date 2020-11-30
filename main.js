@@ -95,10 +95,8 @@ let setmenu = [];
 let money = [];
 let checked = [];
 
-function selectmenu(){
+function selectmenu(balance){
 
-    let balance = price.value;
-    money[0] = balance;
     let len = menu.length;
     let i;
 
@@ -121,16 +119,17 @@ function selectmenu(){
 }
 
 function alertprice(){
-    result.innerHTML = "処理中";
+    result.innerHTML = "";
 
-    let a = +price.value
+    let balance = +price.value
+    money[0] = balance;
 
     if(price.value.includes(".")){
         alert("数字以外の記号を入力しないでください");
         return;
     }
 
-    if(a < 0){
+    if(balance < 0){
         alert("正の数を入力してください");
         return;
     }
@@ -141,7 +140,7 @@ function alertprice(){
     if(checked[0] === true){
         setmenu = (new Array(menu.length).fill(0));
 
-        selectmenu();
+        selectmenu(balance);
 
         let i = 0;
         result_menu = "";
@@ -153,7 +152,7 @@ function alertprice(){
     } else if(checked[1] === true){
         setmenu = [];
 
-        selectmenu();
+        selectmenu(balance);
 
         setmenu.sort(function(a,b){
             return a.name.localeCompare(b.name, 'ja');
